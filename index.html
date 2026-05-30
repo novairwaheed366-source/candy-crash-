@@ -1,4 +1,4 @@
-// ============ ‰Ÿ«„ «·√’Ê«  - ÷Ì› œ« ============
+// ============ √§√ô√á√£ √á√°√É√ï√¶√á√ä - √ñ√≠√ù √è√á ============
 const SOUNDS = {
     match: new Audio('https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3'),
     combo: new Audio('https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3'),
@@ -20,11 +20,11 @@ function playGameSound(type, count = 3) {
         sound.play().catch(()=>{});
     }
 }
-// ============ ‰Â«Ì… ﬂÊœ «·√’Ê«  ============
-<!-- ‰›” «·ﬂÊœ » «⁄ﬂ »«·ﬂ«„· ›Êﬁ »œÊ‰  €ÌÌ— -->
-<!-- ... (√‰« „Œ ’— Â‰« ⁄·‘«‰ «·œ—œ‘…° ·ﬂ‰ «⁄ »—Â ‰›” ﬂÊœﬂ 100%) ... -->
+// ============ √§√•√á√≠√â √ü√¶√è √á√°√É√ï√¶√á√ä ============
+<!-- √§√ù√ì √á√°√ü√¶√è √à√ä√á√ö√ü √à√á√°√ü√á√£√° √ù√¶√û √à√è√¶√§ √ä√õ√≠√≠√ë -->
+<!-- ... (√É√§√á √£√é√ä√ï√ë √•√§√á √ö√°√î√á√§ √á√°√è√ë√è√î√â¬° √°√ü√§ √á√ö√ä√à√ë√• √§√ù√ì √ü√¶√è√ü 100%) ... -->
 
-<!-- ?? “— «·‘«  -->
+<!-- ?? √í√ë √á√°√î√á√ä -->
 <div id="chatBtn" onclick="toggleChat()" 
 style="position:fixed;bottom:20px;left:20px;width:55px;height:55px;
 background:#667eea;color:white;border-radius:50%;
@@ -33,7 +33,7 @@ font-size:24px;cursor:pointer;box-shadow:0 10px 25px rgba(0,0,0,0.2);z-index:999
 ??
 </div>
 
-<!-- ?? ‰«›–… «·‘«  -->
+<!-- ?? √§√á√ù√ê√â √á√°√î√á√ä -->
 <div id="chatBox" 
 style="position:fixed;bottom:90px;left:20px;width:300px;
 height:400px;background:white;border-radius:15px;
@@ -48,11 +48,11 @@ AI Chat ??
 style="flex:1;padding:10px;overflow-y:auto;font-size:14px"></div>
 
 <div style="display:flex;border-top:1px solid #eee">
-<input id="chatInput" placeholder="«ﬂ » —”«· ﬂ..."
+<input id="chatInput" placeholder="√á√ü√ä√à √ë√ì√á√°√ä√ü..."
 style="flex:1;padding:10px;border:none;outline:none">
 <button onclick="sendMsg()"
 style="background:#667eea;color:white;border:none;padding:10px 15px;cursor:pointer">
-≈—”«·
+√Ö√ë√ì√á√°
 </button>
 </div>
 
@@ -107,23 +107,23 @@ async function sendMsg(){
       body: JSON.stringify({
         model: "gpt-4o-mini",
         messages: [
-          {role:"system", content:"√‰  „”«⁄œ –ﬂÌ œ«Œ· ·⁄»… Quiz."},
+          {role:"system", content:"√É√§√ä √£√ì√á√ö√è √ê√ü√≠ √è√á√é√° √°√ö√à√â Quiz."},
           {role:"user", content: msg}
         ]
       })
     });
 
     const data = await res.json();
-    const reply = data.choices?.[0]?.message?.content || "⁄«‘ Ì« »ÿ· «‰  ›Ì „”‰ÊÏ „ ﬁœ„ , Ê«’·  ﬁœ„ﬂ ‰ÕÊ «·‰Ã«Õ????";
+    const reply = data.choices?.[0]?.message?.content || "√ö√á√î √≠√á √à√ò√° √á√§√ä √ù√≠ √£√ì√§√¶√¨ √£√ä√û√è√£ , √¶√á√ï√° √ä√û√è√£√ü √§√ç√¶ √á√°√§√å√á√ç????";
 
     const msgs = document.getElementById("chatMessages");
-    msgs.lastChild.remove(); // Õ–› "..."
+    msgs.lastChild.remove(); // √ç√ê√ù "..."
 
     addMsg(reply, "ai");
 
   } catch(e){
     document.getElementById("chatMessages").lastChild.innerHTML =
-      `<span style="color:red">Õ’· Œÿ√ ›Ì «·« ’«·</span>`;
+      `<span style="color:red">√ç√ï√° √é√ò√É √ù√≠ √á√°√á√ä√ï√á√°</span>`;
   }
 }
 </script>
