@@ -1,0 +1,129 @@
+// ============ ‰Ÿ«„ «·√’Ê«  - ÷Ì› œ« ============
+const SOUNDS = {
+    match: new Audio('https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3'),
+    combo: new Audio('https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3'),
+    special: new Audio('https://assets.mixkit.co/active_storage/sfx/3190/3190-preview.mp3')
+};
+SOUNDS.match.volume = 0.4;
+SOUNDS.combo.volume = 0.5;
+SOUNDS.special.volume = 0.6;
+
+function playGameSound(type, count = 3) {
+    if (navigator.vibrate) {
+        if (type === 'special') navigator.vibrate([50, 50, 100]);
+        else if (type === 'combo') navigator.vibrate([40, 30, 80]);
+        else navigator.vibrate(Math.min(30 + count * 15, 150));
+    }
+    const sound = SOUNDS[type];
+    if (sound) {
+        sound.currentTime = 0;
+        sound.play().catch(()=>{});
+    }
+}
+// ============ ‰Â«Ì… ﬂÊœ «·√’Ê«  ============
+<!-- ‰›” «·ﬂÊœ » «⁄ﬂ »«·ﬂ«„· ›Êﬁ »œÊ‰  €ÌÌ— -->
+<!-- ... (√‰« „Œ ’— Â‰« ⁄·‘«‰ «·œ—œ‘…° ·ﬂ‰ «⁄ »—Â ‰›” ﬂÊœﬂ 100%) ... -->
+
+<!-- ?? “— «·‘«  -->
+<div id="chatBtn" onclick="toggleChat()" 
+style="position:fixed;bottom:20px;left:20px;width:55px;height:55px;
+background:#667eea;color:white;border-radius:50%;
+display:flex;align-items:center;justify-content:center;
+font-size:24px;cursor:pointer;box-shadow:0 10px 25px rgba(0,0,0,0.2);z-index:9999">
+??
+</div>
+
+<!-- ?? ‰«›–… «·‘«  -->
+<div id="chatBox" 
+style="position:fixed;bottom:90px;left:20px;width:300px;
+height:400px;background:white;border-radius:15px;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+display:none;flex-direction:column;overflow:hidden;z-index:9999">
+
+<div style="background:#667eea;color:white;padding:10px;font-weight:bold">
+AI Chat ??
+</div>
+
+<div id="chatMessages" 
+style="flex:1;padding:10px;overflow-y:auto;font-size:14px"></div>
+
+<div style="display:flex;border-top:1px solid #eee">
+<input id="chatInput" placeholder="«ﬂ » —”«· ﬂ..."
+style="flex:1;padding:10px;border:none;outline:none">
+<button onclick="sendMsg()"
+style="background:#667eea;color:white;border:none;padding:10px 15px;cursor:pointer">
+≈—”«·
+</button>
+</div>
+
+</div>
+
+<script>
+/* =========================
+   ?? AI CHAT (ADDED ONLY)
+========================= */
+
+const API_KEY = "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";
+
+function toggleChat(){
+  const box = document.getElementById("chatBox");
+  box.style.display = box.style.display === "flex" ? "none" : "flex";
+}
+
+function addMsg(text, role){
+  const div = document.createElement("div");
+  div.style.margin = "8px 0";
+  div.style.textAlign = role === "user" ? "right" : "left";
+  div.innerHTML = `
+    <span style="
+      display:inline-block;
+      padding:8px 10px;
+      border-radius:10px;
+      background:${role === "user" ? "#667eea" : "#eee"};
+      color:${role === "user" ? "white" : "black"};
+      max-width:80%;
+    ">${text}</span>
+  `;
+  document.getElementById("chatMessages").appendChild(div);
+}
+
+async function sendMsg(){
+  const input = document.getElementById("chatInput");
+  const msg = input.value.trim();
+  if(!msg) return;
+
+  addMsg(msg, "user");
+  input.value = "";
+
+  addMsg("...", "ai");
+
+  try {
+    const res = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + API_KEY
+      },
+      body: JSON.stringify({
+        model: "gpt-4o-mini",
+        messages: [
+          {role:"system", content:"√‰  „”«⁄œ –ﬂÌ œ«Œ· ·⁄»… Quiz."},
+          {role:"user", content: msg}
+        ]
+      })
+    });
+
+    const data = await res.json();
+    const reply = data.choices?.[0]?.message?.content || "⁄«‘ Ì« »ÿ· «‰  ›Ì „”‰ÊÏ „ ﬁœ„ , Ê«’·  ﬁœ„ﬂ ‰ÕÊ «·‰Ã«Õ????";
+
+    const msgs = document.getElementById("chatMessages");
+    msgs.lastChild.remove(); // Õ–› "..."
+
+    addMsg(reply, "ai");
+
+  } catch(e){
+    document.getElementById("chatMessages").lastChild.innerHTML =
+      `<span style="color:red">Õ’· Œÿ√ ›Ì «·« ’«·</span>`;
+  }
+}
+</script>
