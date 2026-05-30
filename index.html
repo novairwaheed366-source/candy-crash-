@@ -70,20 +70,20 @@
 
   <script type="text/babel">
     const { useState, useEffect, useRef, useCallback, memo, Fragment } = React;
-    // ============ ﬂÊœ «·’Ê  Ê«·«Â “«“ - »œ«Ì… ============
+    // ============ √ü√¶√è √á√°√ï√¶√ä √¶√á√°√á√•√ä√í√á√í - √à√è√á√≠√â ============
 const MATCH_SOUND = new Audio('https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3');
 MATCH_SOUND.volume = 0.5;
 
 function playMatchSound(count) {
-    // «Â “«“ ··„Ê»«Ì·
+    // √á√•√ä√í√á√í √°√°√£√¶√à√á√≠√°
     if (navigator.vibrate) {
         navigator.vibrate(Math.min(40 + count * 20, 200));
     }
-    // ’Ê 
+    // √ï√¶√ä
     MATCH_SOUND.currentTime = 0;
     MATCH_SOUND.play().catch(()=>{});
 }
-// ============ ﬂÊœ «·’Ê  Ê«·«Â “«“ - ‰Â«Ì… ============
+// ============ √ü√¶√è √á√°√ï√¶√ä √¶√á√°√á√•√ä√í√á√í - √§√•√á√≠√â ============
 
     // ?? Constants ??????????????????????????????????????????????????????????
     const ROWS = 8, COLS = 8, CELL = 46, GEM = 40;
@@ -478,10 +478,10 @@ function playMatchSound(count) {
           </div>
 
           <div style={{marginTop:10,opacity:0.3,fontSize:10.5,position:"relative",zIndex:2}}>
-            Click or drag to swap adjacent gems ó match 3+ to score!
+            Click or drag to swap adjacent gems ¬ó match 3+ to score!
           </div>
           <div style={{marginTop:8,fontSize:20,fontWeight:"bold",color:"#ff3d9a",letterSpacing:1,direction:"rtl",textShadow:"0 0 16px rgba(255,60,154,0.8),0 0 32px rgba(255,60,154,0.3)",position:"relative",zIndex:2}}>
-            «··⁄»Â „·ﬂ · ‰Ê›Ì— ÊÕÌœ ”„Ì—
+            √á√°√°√ö√à√• √£√°√ü √° √§√¶√ù√≠√ë √¶√ç√≠√è √ì√£√≠√ë
           </div>
 
           {/* Game Over */}
